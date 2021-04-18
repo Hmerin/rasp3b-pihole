@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:v5.8
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "80:80/tcp"
+      - "443:443/tcp"
+    environment:
+      # Edit the time zone to match your location
+      TZ: 'America/Cordoba'
+      # Edit the admin password
+      WEBPASSWORD: 'testpihole'
+    volumes:
+      - './etc-pihole/:/etc/pihole/'
+      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
